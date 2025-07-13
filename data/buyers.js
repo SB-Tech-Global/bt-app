@@ -1,0 +1,50 @@
+export const buyers = [
+  {
+    id: 1,
+    name: 'Acme Corp',
+    email: 'contact@acme.com',
+    phone: '123-456-7890',
+    contactPerson: 'John Doe',
+    contactPersonPhone: '987-654-3210',
+    pendingAmount: 12000,
+    addresses: [
+      {
+        locationName: 'Head Office',
+        locationCode: 'AC-HQ',
+        address: '123 Main St',
+        city: 'Metropolis',
+        state: 'NY',
+        pincode: '10001',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Globex Inc',
+    email: 'info@globex.com',
+    phone: '987-654-3210',
+    contactPerson: 'Jane Smith',
+    contactPersonPhone: '555-123-4567',
+    pendingAmount: 0,
+    addresses: [
+      {
+        locationName: 'Warehouse',
+        locationCode: 'GL-WH',
+        address: '456 Warehouse Rd',
+        city: 'Gotham',
+        state: 'NJ',
+        pincode: '07001',
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: 'Soylent Ltd',
+    email: 'hello@soylent.com',
+    phone: '555-123-4567',
+    contactPerson: 'Alice Brown',
+    contactPersonPhone: '222-333-4444',
+    pendingAmount: 5000,
+    addresses: [],
+  },
+]; 
