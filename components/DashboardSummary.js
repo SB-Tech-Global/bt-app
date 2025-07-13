@@ -23,7 +23,7 @@ export default function DashboardSummary() {
 
   useEffect(() => {
     setLoading(true);
-    apiRequest({ endpoint: 'http://localhost:8000/dashboard-count/', method: 'GET' })
+    apiRequest({ endpoint: '/dashboard-count/', method: 'GET' })
       .then(res => {
         setCounts(res.data);
         setLoading(false);
@@ -37,7 +37,7 @@ export default function DashboardSummary() {
   useEffect(() => {
     if (!fromDate || !toDate) return;
     setSaleLoading(true);
-    apiRequest({ endpoint: 'http://localhost:8000/sales-payment/', method: 'GET', params: { start_date: fromDate, end_date: toDate } })
+    apiRequest({ endpoint: '/sales-payment/', method: 'GET', params: { start_date: fromDate, end_date: toDate } })
       .then(res => {
         setSaleStats(res.data);
         setSaleLoading(false);
@@ -50,7 +50,7 @@ export default function DashboardSummary() {
 
   useEffect(() => {
     setBuyersLoading(true);
-    apiRequest({ endpoint: 'http://localhost:8000/dashboard-buyer-list/', method: 'GET' })
+    apiRequest({ endpoint: '/dashboard-buyer-list/', method: 'GET' })
       .then(res => {
         setBuyersWithPending(res.data || []);
         setBuyersLoading(false);
@@ -85,7 +85,7 @@ export default function DashboardSummary() {
     setPaymentRecordId('');
     setPaymentError('');
     // Fetch unpaid invoices for this buyer
-    apiRequest({ endpoint: 'http://localhost:8000/records/', method: 'GET', params: { buyer_id: buyer.id, inv_status: 'unpaid', transaction_type:'return' } })
+    apiRequest({ endpoint: '/records/', method: 'GET', params: { buyer_id: buyer.id, inv_status: 'unpaid', transaction_type:'return' } })
       .then(res => setBuyerInvoices(res.data))
       .catch(() => setBuyerInvoices([]));
     setShowPaymentModal(true);
@@ -206,14 +206,14 @@ export default function DashboardSummary() {
                   }
                   try {
                     await apiRequest({
-                      endpoint: `http://localhost:8000/update-payment/${paymentRecordId}/`,
+                      endpoint: `/update-payment/${paymentRecordId}/`,
                       method: 'POST',
                       payload: { amount: paymentAmount }
                     });
                     setShowPaymentModal(false);
                     // Refresh buyersWithPending and saleStats
                     setBuyersLoading(true);
-                    apiRequest({ endpoint: 'http://localhost:8000/dashboard-buyer-list/', method: 'GET' })
+                    apiRequest({ endpoint: '/dashboard-buyer-list/', method: 'GET' })
                       .then(res => {
                         setBuyersWithPending(res.data || []);
                         setBuyersLoading(false);
@@ -223,7 +223,7 @@ export default function DashboardSummary() {
                         setBuyersLoading(false);
                       });
                     setSaleLoading(true);
-                    apiRequest({ endpoint: 'http://localhost:8000/sales-payment/', method: 'GET', params: { start_date: fromDate, end_date: toDate } })
+                    apiRequest({ endpoint: '/sales-payment/', method: 'GET', params: { start_date: fromDate, end_date: toDate } })
                       .then(res => {
                         setSaleStats(res.data);
                         setSaleLoading(false);

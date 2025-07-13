@@ -18,7 +18,7 @@ export default function ItemList() {
 
   // Fetch items from backend
   useEffect(() => {
-    apiRequest({ endpoint: 'http://localhost:8000/items/', method: 'GET' })
+    apiRequest({ endpoint: '/items/', method: 'GET' })
       .then(response => setItems(response.data))
       .catch(() => setItems([]));
   }, []);
@@ -47,7 +47,7 @@ export default function ItemList() {
 
   const handleDelete = async () => {
     if (deleteTarget) {
-      await apiRequest({ endpoint: `http://localhost:8000/items/${deleteTarget.id}/`, method: 'DELETE' });
+      await apiRequest({ endpoint: `/items/${deleteTarget.id}/`, method: 'DELETE' });
       setItems(items.filter((i) => i.id !== deleteTarget.id));
       setDeleteTarget(null);
       setShowDeleteModal(false);
@@ -63,7 +63,7 @@ export default function ItemList() {
     setError('');
     try {
       if (isEdit) {
-        const response = await apiRequest({ endpoint: `http://localhost:8000/items/${editId}/`, method: 'PUT', payload: form });
+        const response = await apiRequest({ endpoint: `/items/${editId}/`, method: 'PUT', payload: form });
         const updated = response.data;
         setItems(items.map((item) =>
           item.id === editId
@@ -71,7 +71,7 @@ export default function ItemList() {
             : item
         ));
       } else {
-        const response = await apiRequest({ endpoint: 'http://localhost:8000/items/', method: 'POST', payload: form });
+        const response = await apiRequest({ endpoint: '/items/', method: 'POST', payload: form });
         const created = response.data;
         setItems([...items, created]);
       }

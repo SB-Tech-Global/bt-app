@@ -24,7 +24,7 @@ export default function InventoryPage() {
   useEffect(() => {
     if (activeTab === "own") {
       setLoading(true);
-      apiRequest({ endpoint: "http://localhost:8000/inventories/", method: "GET" })
+      apiRequest({ endpoint: "/inventories/", method: "GET" })
         .then(res => setOwnInventory(res.data))
         .catch(() => setOwnInventory([]))
         .finally(() => setLoading(false));
@@ -35,7 +35,7 @@ export default function InventoryPage() {
   useEffect(() => {
     if (activeTab === "buyer" && selectedBuyerId) {
       setLoading(true);
-      apiRequest({ endpoint: `http://localhost:8000/inventories/`, method: "GET", params: { buyer_id: selectedBuyerId } })
+      apiRequest({ endpoint: `/inventories/`, method: "GET", params: { buyer_id: selectedBuyerId } })
         .then(res => setBuyerInventory(res.data))
         .catch(() => setBuyerInventory([]))
         .finally(() => setLoading(false));
@@ -44,7 +44,7 @@ export default function InventoryPage() {
 
   // Fetch buyers from backend
   useEffect(() => {
-    apiRequest({ endpoint: 'http://localhost:8000/buyers/', method: 'GET' })
+    apiRequest({ endpoint: '/buyers/', method: 'GET' })
       .then(res => setBuyers(res.data))
       .catch(() => setBuyers([]));
   }, []);
@@ -115,7 +115,7 @@ export default function InventoryPage() {
                                   setLoading(true);
                                   setError("");
                                   try {
-                                    const response = await apiRequest({ endpoint: `http://localhost:8000/inventories/${inv.id}/`, method: 'PUT', payload: { quantity: parseInt(editValue, 10) || 0 } });
+                                    const response = await apiRequest({ endpoint: `/inventories/${inv.id}/`, method: 'PUT', payload: { quantity: parseInt(editValue, 10) || 0 } });
                                     const updated = response.data;
                                     setOwnInventory(ownInventory.map((row, i) => i === idx ? updated : row));
                                     setEditIdx(null);

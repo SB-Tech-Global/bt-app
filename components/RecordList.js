@@ -79,7 +79,7 @@ export default function RecordList() {
     
     // Load addresses for the buyer when editing
     if (record.buyer) {
-      apiRequest({ endpoint: 'http://localhost:8000/addresses/', method: 'GET', params: { buyer_id: record.buyer } })
+      apiRequest({ endpoint: '/addresses/', method: 'GET', params: { buyer_id: record.buyer } })
         .then(res => setAddresses(res.data))
         .catch(() => setAddresses([]));
     }
@@ -89,7 +89,7 @@ export default function RecordList() {
     if (window.confirm('Are you sure you want to delete this record?')) {
       try {
         await apiRequest({ 
-          endpoint: `http://localhost:8000/records/${record.id}/`, 
+          endpoint: `/records/${record.id}/`, 
           method: 'DELETE' 
         });
         setRecords(records.filter(r => r.id !== record.id));
@@ -104,7 +104,7 @@ export default function RecordList() {
     if (e.target.name === 'buyerId') {
       setForm(f => ({ ...f, addressIdx: '' })); // Reset address if buyer changes
       if (e.target.value) {
-        apiRequest({ endpoint: 'http://localhost:8000/addresses/', method: 'GET', params: { buyer_id: e.target.value } })
+        apiRequest({ endpoint: '/addresses/', method: 'GET', params: { buyer_id: e.target.value } })
           .then(res => setAddresses(res.data))
           .catch(() => setAddresses([]));
       } else {
@@ -165,7 +165,7 @@ export default function RecordList() {
       if (isEditMode) {
         // Update existing record
         const response = await apiRequest({ 
-          endpoint: `http://localhost:8000/records/${selectedRecord.id}/`, 
+          endpoint: `/records/${selectedRecord.id}/`, 
           method: 'PUT', 
           payload 
         });
@@ -173,7 +173,7 @@ export default function RecordList() {
         setRecords(records.map(r => r.id === selectedRecord.id ? updated : r));
       } else {
         // Create new record
-        const response = await apiRequest({ endpoint: 'http://localhost:8000/records/', method: 'POST', payload });
+        const response = await apiRequest({ endpoint: '/records/', method: 'POST', payload });
         const created = response.data;
         setRecords([created, ...records]);
       }
@@ -189,7 +189,7 @@ export default function RecordList() {
 
   // Fetch records from backend
   useEffect(() => {
-    apiRequest({ endpoint: 'http://localhost:8000/records/', method: 'GET' })
+    apiRequest({ endpoint: '/records/', method: 'GET' })
       .then(res => setRecords(res.data))
       .catch(() => setRecords([]));
   }, []);
@@ -197,10 +197,10 @@ export default function RecordList() {
   // Fetch buyers and items only when add record modal is opened
   useEffect(() => {
     if (showModal) {
-      apiRequest({ endpoint: 'http://localhost:8000/buyers/', method: 'GET' })
+      apiRequest({ endpoint: '/buyers/', method: 'GET' })
         .then(res => setBuyers(res.data))
         .catch(() => setBuyers([]));
-      apiRequest({ endpoint: 'http://localhost:8000/items/', method: 'GET' })
+      apiRequest({ endpoint: '/items/', method: 'GET' })
         .then(res => setItems(res.data))
         .catch(() => setItems([]));
     }

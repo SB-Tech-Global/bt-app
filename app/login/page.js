@@ -33,7 +33,7 @@ export default function LoginPage() {
     try {
       
       const response = await apiRequest({
-        endpoint: "http://localhost:8000/token/",
+        endpoint: "/token/",
         method: "POST",
         payload: formData
       });
@@ -75,7 +75,7 @@ export default function LoginPage() {
 
     try {
       const response = await apiRequest({
-        endpoint: `http://localhost:8000/auth/${provider}/`,
+        endpoint: `/auth/${provider}/`,
         method: "POST",
         payload: { credential }
       });

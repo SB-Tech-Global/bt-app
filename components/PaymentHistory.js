@@ -7,7 +7,7 @@ export default function PaymentHistory() {
 
   useEffect(() => {
     setLoading(true);
-    apiRequest({ endpoint: 'http://localhost:8000/payment-receipts/', method: 'GET' })
+    apiRequest({ endpoint: '/payment-receipts/', method: 'GET' })
       .then(res => {
         setPayments(res.data);
         setLoading(false);

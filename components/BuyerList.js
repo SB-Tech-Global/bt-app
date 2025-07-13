@@ -32,7 +32,7 @@ export default function BuyerList() {
 
   // Fetch buyers from backend
   useEffect(() => {
-    apiRequest({ endpoint: 'http://localhost:8000/buyers/', method: 'GET' })
+    apiRequest({ endpoint: '/buyers/', method: 'GET' })
       .then(res => setBuyers(res.data))
       .catch(() => setBuyers([]));
   }, []);
@@ -64,7 +64,7 @@ export default function BuyerList() {
 
   const handleDelete = async () => {
     if (deleteTarget) {
-      await apiRequest({ endpoint: `http://localhost:8000/buyers/${deleteTarget.id}/`, method: 'DELETE' });
+      await apiRequest({ endpoint: `/buyers/${deleteTarget.id}/`, method: 'DELETE' });
       setBuyers(buyers.filter((b) => b.id !== deleteTarget.id));
       setDeleteTarget(null);
       setShowDeleteModal(false);
@@ -80,7 +80,7 @@ export default function BuyerList() {
     setError('');
     try {
       if (isEdit) {
-        const response = await apiRequest({ endpoint: `http://localhost:8000/buyers/${editId}/`, method: 'PUT', payload: form });
+        const response = await apiRequest({ endpoint: `/buyers/${editId}/`, method: 'PUT', payload: form });
         const updated = response.data;
         setBuyers(buyers.map((buyer) =>
           buyer.id === editId
@@ -88,7 +88,7 @@ export default function BuyerList() {
             : buyer
         ));
       } else {
-        const response = await apiRequest({ endpoint: 'http://localhost:8000/buyers/', method: 'POST', payload: form });
+        const response = await apiRequest({ endpoint: '/buyers/', method: 'POST', payload: form });
         const created = response.data;
         setBuyers([...buyers, created]);
       }
@@ -104,7 +104,7 @@ export default function BuyerList() {
   // Fetch addresses for a buyer
   const fetchAddresses = async (buyerId) => {
     try {
-      const res = await apiRequest({ endpoint: `http://localhost:8000/addresses/`, method: 'GET', params: { buyer_id: buyerId } });
+      const res = await apiRequest({ endpoint: `/addresses/`, method: 'GET', params: { buyer_id: buyerId } });
       return res.data;
     } catch {
       return [];
@@ -130,10 +130,10 @@ export default function BuyerList() {
     if (editAddressIdx !== null) {
       // Edit address
       const addr = addresses[editAddressIdx];
-      await apiRequest({ endpoint: `http://localhost:8000/addresses/${addr.id}/`, method: 'PUT', payload: addressForm });
+      await apiRequest({ endpoint: `/addresses/${addr.id}/`, method: 'PUT', payload: addressForm });
     } else {
       // Create address
-      await apiRequest({ endpoint: `http://localhost:8000/addresses/`, method: 'POST', payload: { ...addressForm, buyer: drawerBuyer.id } });
+      await apiRequest({ endpoint: `/addresses/`, method: 'POST', payload: { ...addressForm, buyer: drawerBuyer.id } });
     }
     const updatedAddresses = await fetchAddresses(drawerBuyer.id);
     setAddresses(updatedAddresses); // Ensure UI updates
@@ -154,7 +154,7 @@ export default function BuyerList() {
   const handleDeleteAddress = async (idx) => {
     if (!drawerBuyer) return;
     const addr = addresses[idx];
-    await apiRequest({ endpoint: `http://localhost:8000/addresses/${addr.id}/`, method: 'DELETE' });
+    await apiRequest({ endpoint: `/addresses/${addr.id}/`, method: 'DELETE' });
     const updatedAddresses = await fetchAddresses(drawerBuyer.id);
     setAddresses(updatedAddresses); // Ensure UI updates
     setDrawerBuyer({ ...drawerBuyer, addresses: updatedAddresses });

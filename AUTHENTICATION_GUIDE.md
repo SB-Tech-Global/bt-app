@@ -107,7 +107,7 @@ const handleAuthLogout = (event) => {
 const handleSubmit = async (e) => {
   // 1. Send credentials to backend
   const response = await apiRequest({
-    endpoint: "http://localhost:8000/token/",
+    endpoint: "/token/",
     method: "POST",
     payload: formData
   });
@@ -314,7 +314,7 @@ import apiRequest from '../components/utils/apiRequest';
 
 // Token automatically included in headers
 const response = await apiRequest({
-  endpoint: 'http://localhost:8000/api/data/',
+  endpoint: '/api/data/',
   method: 'GET'
 });
 ```
@@ -324,107 +324,8 @@ const response = await apiRequest({
 ### 1. Environment Variables
 ```env
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=https://bt-backend.ntgen1.in
 ```
 
 ### 2. Backend API Endpoints
 ```
-POST /token/                    # Username/password login
-POST /auth/google/              # Google OAuth login
-GET  /api/protected-endpoint/   # Protected API calls
-```
-
-### 3. Google OAuth Setup
-1. Get Client ID from Google Cloud Console
-2. Replace `YOUR_GOOGLE_CLIENT_ID` in login page
-3. Configure authorized origins in Google Console
-
-## 🛡️ Security Features
-
-### 1. Token Management
-- ✅ JWT tokens stored in localStorage
-- ✅ Automatic token inclusion in API requests
-- ✅ Token expiration handling
-- ✅ Secure token cleanup on logout
-
-### 2. Route Protection
-- ✅ Automatic redirect for unauthenticated users
-- ✅ Loading states during authentication checks
-- ✅ Clean error handling
-
-### 3. Session Management
-- ✅ Automatic logout on token expiration
-- ✅ Event-driven authentication state updates
-- ✅ Consistent state across components
-
-### 4. Error Handling
-- ✅ Graceful 401 error handling
-- ✅ User-friendly error messages
-- ✅ Automatic cleanup on errors
-
-## 🔄 State Management
-
-### 1. Authentication State
-```javascript
-{
-  user: null | UserObject,
-  token: null | string,
-  loading: boolean,
-  isAuthenticated: () => boolean
-}
-```
-
-### 2. localStorage Structure
-```javascript
-{
-  token: "jwt-token-string",
-  user: "JSON-stringified-user-object" // Optional
-}
-```
-
-### 3. Event System
-```javascript
-// Custom events for authentication
-window.dispatchEvent(new CustomEvent('auth:logout', { 
-  detail: { reason: 'token_expired' } 
-}));
-```
-
-## 🚀 Best Practices
-
-### 1. Always Use ProtectedRoute
-```javascript
-// ✅ Good
-export default function MyPage() {
-  return (
-    <ProtectedRoute>
-      <div>Content</div>
-    </ProtectedRoute>
-  );
-}
-
-// ❌ Bad - No protection
-export default function MyPage() {
-  return <div>Content</div>;
-}
-```
-
-### 2. Use AuthContext for State
-```javascript
-// ✅ Good
-const { user, logout } = useAuth();
-
-// ❌ Bad - Direct localStorage access
-const token = localStorage.getItem('token');
-```
-
-### 3. Handle Loading States
-```javascript
-const { loading } = useAuth();
-
-if (loading) {
-  return <div>Loading...</div>;
-}
-```
-
-This authentication system provides a robust, secure, and user-friendly authentication experience with automatic session management and protected routes. 

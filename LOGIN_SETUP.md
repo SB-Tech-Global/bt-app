@@ -72,7 +72,7 @@ Create a `.env.local` file in your project root:
 
 ```env
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=https://bt-backend.ntgen1.in
 ```
 
 ### 6. Usage
