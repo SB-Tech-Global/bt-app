@@ -155,8 +155,8 @@ export default function RecordList() {
           item: parseInt(li.itemId),
           quantity: parseInt(li.quantity),
           price: li.price,
-          gst: li.gst,
-          cess: li.cess,
+          gst: li.gst === '' || li.gst === undefined ? 0 : li.gst,
+          cess: li.cess === '' || li.cess === undefined ? 0 : li.cess,
         })),
         created_for_date: form.created_for_date,
         days: parseInt(form.days) || 0,
@@ -383,7 +383,6 @@ export default function RecordList() {
                                 min="0"
                                 value={li.gst}
                                 onChange={e => handleLineItemChange(idx, 'gst', e.target.value)}
-                                required
                                 placeholder="GST %"
                                 className="w-10 md:w-14 rounded bg-neutral-800 text-white border border-neutral-700 px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                               />
@@ -394,7 +393,6 @@ export default function RecordList() {
                                 min="0"
                                 value={li.cess}
                                 onChange={e => handleLineItemChange(idx, 'cess', e.target.value)}
-                                required
                                 placeholder="Cess"
                                 className="w-10 md:w-14 rounded bg-neutral-800 text-white border border-neutral-700 px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 text-right"
                               />

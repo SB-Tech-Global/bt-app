@@ -79,8 +79,15 @@ export default function BuyerList() {
     e.preventDefault();
     setError('');
     try {
+      const payload = {
+        name: form.name,
+        email: form.email || '',
+        phone_no: form.phone_no || '',
+        contact_person_name: form.contact_person_name || '',
+        contact_person_number: form.contact_person_number || '',
+      };
       if (isEdit) {
-        const response = await apiRequest({ endpoint: `/buyers/${editId}/`, method: 'PUT', payload: form });
+        const response = await apiRequest({ endpoint: `/buyers/${editId}/`, method: 'PUT', payload: payload });
         const updated = response.data;
         setBuyers(buyers.map((buyer) =>
           buyer.id === editId
@@ -88,7 +95,7 @@ export default function BuyerList() {
             : buyer
         ));
       } else {
-        const response = await apiRequest({ endpoint: '/buyers/', method: 'POST', payload: form });
+        const response = await apiRequest({ endpoint: '/buyers/', method: 'POST', payload: payload });
         const created = response.data;
         setBuyers([...buyers, created]);
       }
@@ -217,7 +224,6 @@ export default function BuyerList() {
                 type="email"
                 value={form.email}
                 onChange={handleChange}
-                required
               />
               <input
                 className="rounded bg-neutral-800 text-white border border-neutral-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -225,7 +231,6 @@ export default function BuyerList() {
                 name="phone_no"
                 value={form.phone_no}
                 onChange={handleChange}
-                required
               />
               <input
                 className="rounded bg-neutral-800 text-white border border-neutral-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -233,7 +238,6 @@ export default function BuyerList() {
                 name="contact_person_name"
                 value={form.contact_person_name}
                 onChange={handleChange}
-                required
               />
               <input
                 className="rounded bg-neutral-800 text-white border border-neutral-700 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -241,7 +245,6 @@ export default function BuyerList() {
                 name="contact_person_number"
                 value={form.contact_person_number}
                 onChange={handleChange}
-                required
               />
               <button
                 type="submit"
