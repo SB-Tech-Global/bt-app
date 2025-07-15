@@ -370,6 +370,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
+                                step="0.01"
                                 value={li.price}
                                 onChange={e => handleLineItemChange(idx, 'price', e.target.value)}
                                 required
@@ -381,6 +382,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
+                                step="0.01"
                                 value={li.gst}
                                 onChange={e => handleLineItemChange(idx, 'gst', e.target.value)}
                                 placeholder="GST %"
@@ -391,6 +393,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
+                                step="0.01"
                                 value={li.cess}
                                 onChange={e => handleLineItemChange(idx, 'cess', e.target.value)}
                                 placeholder="Cess"
