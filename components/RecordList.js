@@ -28,6 +28,7 @@ export default function RecordList() {
   const [buyers, setBuyers] = useState([]);
   const [items, setItems] = useState([]);
   const [addresses, setAddresses] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const getBuyerName = (id) => {
     const buyer = buyers.find(b => b.id === id);
@@ -145,6 +146,7 @@ export default function RecordList() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsSubmitting(true);
     try {
       // Prepare payload for backend
       const payload = {
@@ -184,6 +186,8 @@ export default function RecordList() {
       setForm({ buyerId: '', addressIdx: '', transactionType: 'Sale', lineItems: [{ itemId: '', quantity: '', price: '', gst: '', cess: '' }], days: '' });
     } catch (err) {
       setError('Failed to save record. Please check your input or try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -370,7 +374,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
-                                step="0.01"
+                                step="0.001"
                                 value={li.price}
                                 onChange={e => handleLineItemChange(idx, 'price', e.target.value)}
                                 required
@@ -382,7 +386,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
-                                step="0.01"
+                                step="0.001"
                                 value={li.gst}
                                 onChange={e => handleLineItemChange(idx, 'gst', e.target.value)}
                                 placeholder="GST %"
@@ -393,7 +397,7 @@ export default function RecordList() {
                               <input
                                 type="number"
                                 min="0"
-                                step="0.01"
+                                step="0.001"
                                 value={li.cess}
                                 onChange={e => handleLineItemChange(idx, 'cess', e.target.value)}
                                 placeholder="Cess"
@@ -464,8 +468,9 @@ export default function RecordList() {
                 <button
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-xl shadow-lg text-lg tracking-wide"
+                  disabled={isSubmitting}
                 >
-                  {isEditMode ? 'Update Record' : 'Add Record'}
+                  {isSubmitting ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update Record' : 'Add Record')}
                 </button>
               </div>
             </form>
@@ -612,6 +617,14 @@ export default function RecordList() {
                   <td className="px-3 sm:px-4 py-2 border-b border-neutral-800 text-center">
                     <div className="flex gap-1 sm:gap-2 justify-center">
                       <button
+                        onClick={() => handleView(record)}
+                        className="p-1.5 sm:p-2 rounded-full inline-flex items-center justify-center hover:scale-110 hover:text-blue-400 transition-all duration-150"
+                        title="View"
+                        aria-label={`View record #${record.id}`}
+                      >
+                        <FiEye size={16} className="sm:w-4 sm:h-4" />
+                      </button>
+                      <button
                         onClick={() => handleEdit(record)}
                         className="p-1.5 sm:p-2 rounded-full inline-flex items-center justify-center hover:scale-110 hover:text-yellow-400 transition-all duration-150"
                         title="Edit"
@@ -620,12 +633,12 @@ export default function RecordList() {
                         <FiEdit2 size={16} className="sm:w-4 sm:h-4" />
                       </button>
                       <button
-                        onClick={() => handleView(record)}
-                        className="p-1.5 sm:p-2 rounded-full inline-flex items-center justify-center hover:scale-110 hover:text-blue-400 transition-all duration-150"
-                        title="View"
-                        aria-label={`View record #${record.id}`}
+                        onClick={() => handleDelete(record)}
+                        className="p-1.5 sm:p-2 rounded-full inline-flex items-center justify-center hover:scale-110 hover:text-red-400 transition-all duration-150"
+                        title="Delete"
+                        aria-label={`Delete record #${record.id}`}
                       >
-                        <FiEye size={16} className="sm:w-4 sm:h-4" />
+                        <FiTrash2 size={16} className="sm:w-4 sm:h-4" />
                       </button>
                     </div>
                   </td>

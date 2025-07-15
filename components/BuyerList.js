@@ -57,19 +57,19 @@ export default function BuyerList() {
     setShowModal(true);
   };
 
-  const openDeleteModal = (buyer) => {
-    setDeleteTarget(buyer);
-    setShowDeleteModal(true);
-  };
+  // const openDeleteModal = (buyer) => {
+  //   setDeleteTarget(buyer);
+  //   setShowDeleteModal(true);
+  // };
 
-  const handleDelete = async () => {
-    if (deleteTarget) {
-      await apiRequest({ endpoint: `/buyers/${deleteTarget.id}/`, method: 'DELETE' });
-      setBuyers(buyers.filter((b) => b.id !== deleteTarget.id));
-      setDeleteTarget(null);
-      setShowDeleteModal(false);
-    }
-  };
+  // const handleDelete = async () => {
+  //   if (deleteTarget) {
+  //     await apiRequest({ endpoint: `/buyers/${deleteTarget.id}/`, method: 'DELETE' });
+  //     setBuyers(buyers.filter((b) => b.id !== deleteTarget.id));
+  //     setDeleteTarget(null);
+  //     setShowDeleteModal(false);
+  //   }
+  // };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -258,6 +258,7 @@ export default function BuyerList() {
       )}
 
       {/* Delete Confirmation Modal */}
+      {/*
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
           <div className="bg-neutral-900 rounded-lg shadow-lg p-6 w-full max-w-md">
@@ -280,6 +281,7 @@ export default function BuyerList() {
           </div>
         </div>
       )}
+      */}
 
       {/* Side Drawer for Addresses */}
       {drawerBuyer && (
@@ -478,6 +480,7 @@ export default function BuyerList() {
                     >
                       <FiEdit2 size={16} className="sm:w-4 sm:h-4" />
                     </button>
+                    {/*
                     <button
                       onClick={() => openDeleteModal(buyer)}
                       className="p-1.5 sm:p-2 rounded-full inline-flex items-center justify-center hover:scale-110 hover:text-red-500 transition-all duration-150"
@@ -486,6 +489,7 @@ export default function BuyerList() {
                     >
                       <FiTrash2 size={16} className="sm:w-4 sm:h-4" />
                     </button>
+                    */}
                   </div>
                 </td>
               </tr>
